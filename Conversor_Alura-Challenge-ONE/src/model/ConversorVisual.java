@@ -5,14 +5,24 @@ import javax.swing.JOptionPane;
 import interfaces.CallBack;
 
 public class ConversorVisual {
-  
+
   public void init(Conversor conversor, String askQuantity, String select1, String select2, CallBack callback) {
-    Object response = JOptionPane.showInputDialog(askQuantity);
-    if (response == null)
-      return;
-    double quantity = Double.valueOf(String.valueOf(response));
-    if (quantity == 0)
-      return;
+    double quantity = -1;
+    while (quantity < 0) {
+      Object response = JOptionPane.showInputDialog(askQuantity);
+      if (response == null)
+        return;
+      try {
+        quantity = Double.valueOf(String.valueOf(response));
+        if (quantity < 0) {
+          throw new Exception();
+        }
+        // break;
+      } catch (Exception e) {
+        JOptionPane.showMessageDialog(null, "Valor no válido", "Error", 0, null);
+      }
+    }
+
     String[] options = conversor.getOptions();
     Object from = JOptionPane.showInputDialog(null,
         select1, "Conversion",

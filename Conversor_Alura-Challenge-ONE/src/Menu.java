@@ -1,8 +1,6 @@
 
 import java.util.HashMap;
 
-import javax.swing.JFrame;
-
 import javax.swing.JOptionPane;
 
 import conversor.money.MoneyConversorVisual;
@@ -20,20 +18,23 @@ public class Menu {
 
   public static void main(String[] args) {
     initConversors();
-
-    // JFrame mainJFrame = new JFrame("Conversor de Monedas - Challenge ONE Java");
-    // mainJFrame.setSize(500, 300);
-
     String[] options = conversors.keySet().toArray(new String[0]);
 
     Object response = JOptionPane.showInputDialog(null,
         "Seleccione una opción de conversión", "Menu",
         -1, null, options,
         options[0]);
-    if (response == null)
+    if (response == null) {
+      JOptionPane.showMessageDialog(null, "Programa terminado", "Fin del programa", 1, null);
       return;
+    }
     ConversorVisual currentConversor = conversors.get(response);
     currentConversor.init();
+    if (JOptionPane.showConfirmDialog(null,
+        "¿Desea continuar?", "Continuar", 0, 2, null) != 0) {
+      JOptionPane.showMessageDialog(null, "Programa terminado", "Fin del programa", 1, null);
+      return;
+    }
     Menu.main(args);
   }
 
